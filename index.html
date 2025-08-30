@@ -103,6 +103,39 @@ a, button { touch-action: manipulation; }
 
     /* --- Footer --- */
     footer { margin-top: 3rem; padding: 2rem 0 4rem; color: #64748b; border-top: 1px solid #e2e8f0; text-align: center; font-size: .95rem; }
+
+    /* Default: hide menu button, show links inline */
+.menu-toggle { display: none; }
+.nav-links { display: flex; gap: 1rem; }
+
+/* On small screens: show button, hide nav until opened */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: inline-block;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: .6rem;
+    padding: .5rem .7rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    right: 4%;
+    top: 60px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: .75rem;
+    padding: .5rem;
+    flex-direction: column;
+    min-width: 180px;
+    box-shadow: 0 8px 30px rgba(2,6,23,.08);
+  }
+
+  .nav-links.open { display: flex; }
+}
   </style>
 </head>
 
