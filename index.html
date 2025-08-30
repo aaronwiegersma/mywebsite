@@ -10,15 +10,6 @@
 :root { --space: 1rem; }
 a, button { touch-action: manipulation; }
 
-/* Show a clear tap target for the menu button on mobile */
-.menu-toggle {
-  display: none;            /* hidden on desktop */
-  background: white;
-  border: 1px solid #cbd5e1;
-  border-radius: .6rem;
-  padding: .5rem .7rem;
-  font-size: 1.2rem;
-}
 
 /* Nav links as a row on desktop */
 .nav-links { display: flex; align-items: center; gap: 1rem; }
@@ -139,17 +130,6 @@ a, button { touch-action: manipulation; }
   </style>
 </head>
 
-<script>
-  // Mobile menu toggle
-  const btn = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('#site-nav');
-  if (btn && nav) {
-    btn.addEventListener('click', () => {
-      nav.classList.toggle('open');
-      btn.setAttribute('aria-expanded', nav.classList.contains('open'));
-    });
-  }
-</script>
 <body>
   <header>
   <div class="container nav">
@@ -235,5 +215,16 @@ a, button { touch-action: manipulation; }
       e.target.reset();
     }
   </script>
+  <script>
+  // Mobile menu toggle
+  const btn = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('#site-nav');
+  if (btn && nav) {
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', nav.classList.contains('open'));
+    });
+  }
+</script>
 </body>
 </html>
