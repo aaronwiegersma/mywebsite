@@ -134,20 +134,15 @@ a, button { touch-action: manipulation; }
   <header>
   <div class="container nav">
     <a href="/index.html" class="brand">
+      <!-- use your logo here if you have one -->
       <span class="brand-badge" aria-hidden="true"></span>
       <span>My First Site</span>
     </a>
 
-    <!-- Mobile menu button -->
-    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
-      ☰
-    </button>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">☰</button>
 
-    <nav id="site-nav" class="nav-links">
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <!-- The nav partial will be injected here -->
+    <div id="site-nav"></div>
   </div>
 </header>
 
