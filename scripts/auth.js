@@ -4,8 +4,8 @@
 // 1) Fill these in from your Supabase project settings → API
 // - Project URL (starts with https://xxxxxxxx.supabase.co)
 // - anon public key
-const SUPABASE_URL = "https://YOUR-PROJECT-REF.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
+const SUPABASE_URL = "https://tcwznubthosvihdrvmlg.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjd3pudWJ0aG9zdmloZHJ2bWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNTIwNzcsImV4cCI6MjA3MTgyODA3N30.MYVewXJ1LIUjtLv_bdVjzvYqwu87C8gDLxWGrfj48-s";
 
 
 // 2) Initialize client (global for reuse on other pages)
