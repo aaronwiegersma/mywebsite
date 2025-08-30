@@ -27,16 +27,19 @@
 </head>
 <body>
   <header>
-    <div class="container nav">
-      <a href="/index.html" class="brand">
-        <img src="/logo.png" alt="My First Site Logo" style="height:100px;" />
-      </a>
-    <nav>
-      <a href="/index.html">Home</a>
-      <a href="/about.html">About</a>
-    </nav>
-   </div>
-  </header>
+  <div class="container nav">
+    <a href="/index.html" class="brand">
+      <!-- use your logo here if you have one -->
+      <span class="brand-badge" aria-hidden="true"></span>
+      <span>My First Site</span>
+    </a>
+
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">☰</button>
+
+    <!-- The nav partial will be injected here -->
+    <div id="site-nav"></div>
+  </div>
+</header>
 
   <main class="container">
     <h1>About Us</h1>
