@@ -58,17 +58,6 @@ a, button { touch-action: manipulation; }
   .nav-links.open { display: flex; }
 }
 
-    <script>
-  // Mobile menu toggle
-  const btn = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('#site-nav');
-  if (btn && nav) {
-    btn.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      btn.setAttribute('aria-expanded', String(open));
-    });
-  }
-</script>
     /* --- Reset / base --- */
     *, *::before, *::after { box-sizing: border-box; }
     body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #0f172a; background: #f8fafc; }
@@ -116,6 +105,18 @@ a, button { touch-action: manipulation; }
     footer { margin-top: 3rem; padding: 2rem 0 4rem; color: #64748b; border-top: 1px solid #e2e8f0; text-align: center; font-size: .95rem; }
   </style>
 </head>
+
+<script>
+  // Mobile menu toggle
+  const btn = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('#site-nav');
+  if (btn && nav) {
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', nav.classList.contains('open'));
+    });
+  }
+</script>
 <body>
   <header>
   <div class="container nav">
