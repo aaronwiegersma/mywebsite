@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My First Website</title>
+  <meta name="description" content="A super simple website deployed on Vercel." />
+  <style>
+    /* --- Reset / base --- */
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #0f172a; background: #f8fafc; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* --- Layout helpers --- */
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    .btn { display: inline-block; padding: .75rem 1rem; border-radius: .75rem; border: 1px solid #0ea5e9; background: #0ea5e9; color: white; font-weight: 600; transition: transform .06s ease, filter .2s ease; }
+    .btn:hover { filter: brightness(1.05); }
+    .btn:active { transform: translateY(1px); }
+
+    /* --- Topbar --- */
+    header { position: sticky; top: 0; backdrop-filter: blur(6px); background: rgba(248, 250, 252, .8); border-bottom: 1px solid #e2e8f0; z-index: 10; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: .9rem 0; }
+    .brand { display: flex; gap: .6rem; align-items: center; font-weight: 800; letter-spacing: .3px; }
+    .brand-badge { width: 28px; height: 28px; border-radius: .6rem; background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+    .nav a { margin-left: 1rem; padding: .4rem .6rem; border-radius: .5rem; }
+    .nav a:hover { background: #e2e8f0; }
+
+    /* --- Hero --- */
+    .hero { padding: 5rem 0 3rem; text-align: center; }
+    .hero h1 { font-size: clamp(2rem, 3vw + 1rem, 3.2rem); line-height: 1.1; margin: 0 0 1rem; }
+    .hero p { color: #334155; font-size: 1.1rem; margin: 0 auto 1.5rem; max-width: 58ch; }
+
+    /* --- Features --- */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: white; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.25rem; box-shadow: 0 1px 0 rgba(2, 6, 23, .04); }
+    .card h3 { margin: .2rem 0 .5rem; }
+    .card p { color: #475569; margin: 0; }
+
+    /* --- Callout --- */
+    .callout { margin: 3rem 0; background: linear-gradient(180deg, #e0f2fe, #f0f9ff); border: 1px solid #bae6fd; border-radius: 1rem; padding: 1.25rem; text-align: center; }
+
+    /* --- Contact --- */
+    .contact { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: center; margin: 3rem 0; }
+    @media (max-width: 900px) { .contact { grid-template-columns: 1fr; } }
+    form { display: grid; gap: .8rem; }
+    input, textarea { width: 100%; padding: .9rem 1rem; border: 1px solid #cbd5e1; border-radius: .75rem; background: white; font: inherit; }
+    textarea { min-height: 120px; resize: vertical; }
+
+    /* --- Footer --- */
+    footer { margin-top: 3rem; padding: 2rem 0 4rem; color: #64748b; border-top: 1px solid #e2e8f0; text-align: center; font-size: .95rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>My First Site</span>
+      </div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+        <a class="btn" href="#" onclick="alert('You clicked!'); return false;">Try It</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="home">
+      <h1>Hey! You just made a website 🎉</h1>
+      <p>This is a single HTML file with a bit of CSS and tiny JavaScript. You can edit the text, swap colors, and add sections—then push changes and Vercel updates your site automatically.</p>
+      <p>
+        <a class="btn" href="#features">Show me the features</a>
+      </p>
+    </section>
+
+    <section id="features" class="grid" aria-label="Features">
+      <article class="card">
+        <h3>Fast by default</h3>
+        <p>Static sites are speedy and secure. Vercel serves your pages from a global network so your site loads quickly.</p>
+      </article>
+      <article class="card">
+        <h3>Easy to edit</h3>
+        <p>Change text right in this file. Commit to GitHub and your site redeploys automatically.</p>
+      </article>
+      <article class="card">
+        <h3>Add pages</h3>
+        <p>Create another file like <code>about.html</code> and link to it. Vercel will host it—no extra setup.</p>
+      </article>
+    </section>
+
+    <section class="callout" role="note">
+      <p><strong>Tip:</strong> Rename the brand, tweak colors, and replace this text with your own. It’s your site now.</p>
+    </section>
+
+    <section id="contact" class="contact">
+      <div>
+        <h2>Contact</h2>
+        <p>Forms need a server to actually send email. This demo just shows the fields. Later you can connect services like Formspree, Basin, or Vercel Functions.</p>
+      </div>
+      <form onsubmit="handleSubmit(event)">
+        <label>
+          Name
+          <input name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Message
+          <textarea name="message" required></textarea>
+        </label>
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Your Name. Built and deployed on Vercel.</div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function handleSubmit(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      alert(`Thanks, ${data.name}! (This demo form doesn't send yet.)`);
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
