@@ -1,0 +1,267 @@
+Below are two files you can copy into your repo to add a working Supabase login page to your current static site (with your partial nav).
+
+---
+
+## 1) `login.html` (put this at your repo root)
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Log in • Tool Finder</title>
+  <meta name="description" content="Log in to your Tool Finder account." />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* Minimal page-specific styles (works with your existing tokens) */
+    .auth-wrap{width:min(520px,92%);margin:2.5rem auto;background:#fff;border:1px solid var(--ring);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.06);padding:1.25rem}
+    .auth-wrap h1{margin:.25rem 0 0.25rem;font-size:1.6rem}
+    .auth-wrap p.lead{color:var(--muted);margin:0 0 1rem}
+    .auth-form{display:grid;gap:.75rem;margin-top:.5rem}
+    .row{display:grid;gap:.4rem}
+    .row label{font-weight:600}
+    .row input{padding:.8rem 1rem;border:1px solid var(--ring);border-radius:12px;font:inherit}
+    .btn.primary{display:inline-block;width:100%;text-align:center;padding:.85rem 1rem;border-radius:12px;background:var(--primary);color:#fff;border:1px solid var(--primary);font-weight:700}
+    .btn.ghost{display:inline-block;width:100%;text-align:center;padding:.85rem 1rem;border-radius:12px;background:#fff;color:var(--ink);border:1px solid var(--ring);font-weight:700}
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:.25rem}
+    .swap{background:none;border:none;color:var(--primary);font-weight:700;cursor:pointer}
+    .oauth{display:grid;gap:.5rem;margin-top:.75rem}
+    .alert{margin:.75rem 0 0;padding:.7rem 1rem;border-radius:10px;font-size:.95rem}
+    .alert.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+    .alert.success{background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46}
+  </style>
+  <!-- Supabase client via CDN -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <!-- Your small auth helper -->
+  <script defer src="/scripts/auth.js"></script>
+</head>
+<body>
+  <!-- Header with partial nav -->
+  <header>
+    <div class="container nav">
+      <a href="/index.html" class="logo">⚡ Tool Finder</a>
+      <button class="menu-toggle" aria-controls="site-links" aria-expanded="false">☰</button>
+      <div id="nav-holder" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="auth-wrap" role="form">
+      <h1 id="auth-title">Welcome back</h1>
+      <p class="lead">Sign in to continue. Don’t have an account?
+        <button id="swap-mode" class="swap" type="button">Create one</button>
+      </p>
+
+      <div id="auth-alert" class="alert" style="display:none"></div>
+
+      <form id="auth-form" class="auth-form">
+        <div class="row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="row">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn primary" type="submit">Sign in</button>
+      </form>
+
+      <div class="meta">
+        <a href="#" id="reset-link">Forgot password?</a>
+      </div>
+
+      <div class="oauth" aria-label="Or continue with">
+        <button class="btn ghost" id="google-btn" type="button">Continue with Google</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Tool Finder</div>
+  </footer>
+
+  <script>
+    // Load shared nav + highlight active link (same pattern you already use)
+    (async () => {
+      const holder = document.getElementById('nav-holder');
+      try{const r = await fetch('/partials/nav.html',{cache:'no-cache'}); holder.innerHTML = await r.text();}
+      catch{holder.innerHTML = '<nav class="links" id="site-links"><a href="/index.html">Home</a><a href="/login.html" aria-current="page">Login</a></nav>';}
+      const links = document.getElementById('site-links');
+      const btn = document.querySelector('.menu-toggle');
+      if(btn && links){ btn.addEventListener('click',()=>{ const open = links.classList.toggle('open'); btn.setAttribute('aria-expanded', String(open)); }); }
+      const here = location.pathname.replace(/index\.html$/, '/');
+      links?.querySelectorAll('a').forEach(a=>{ const href = new URL(a.href, location.origin).pathname.replace(/index\.html$/, '/'); if(href===here) a.setAttribute('aria-current','page'); });
+    })();
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+```
+
+---
+
+## 2) `scripts/auth.js` (create the folder `/scripts/` and add this file)
+
+```javascript
+// ============================
+// Supabase Auth helper (v2)
+// ============================
+// 1) Fill these in from your Supabase project settings → API
+//    - Project URL (starts with https://xxxxxxxx.supabase.co)
+//    - anon public key
+const SUPABASE_URL = "https://YOUR-PROJECT-REF.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
+
+// 2) Initialize client (global for reuse on other pages)
+window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// 3) Basic auth UI logic for login.html
+(function(){
+  const form = document.getElementById('auth-form');
+  if (!form) return; // only run on login.html
+
+  const title = document.getElementById('auth-title');
+  const swap  = document.getElementById('swap-mode');
+  const alertBox = document.getElementById('auth-alert');
+  const email = document.getElementById('email');
+  const pass  = document.getElementById('password');
+  const reset = document.getElementById('reset-link');
+  const gbtn  = document.getElementById('google-btn');
+
+  let mode = 'signin'; // or 'signup'
+
+  function showAlert(kind, msg){
+    alertBox.className = `alert ${kind}`;
+    alertBox.textContent = msg;
+    alertBox.style.display = 'block';
+  }
+  function clearAlert(){ alertBox.style.display='none'; alertBox.textContent=''; }
+
+  swap?.addEventListener('click',()=>{
+    mode = mode === 'signin' ? 'signup' : 'signin';
+    title.textContent = mode === 'signin' ? 'Welcome back' : 'Create your account';
+    document.querySelector('.btn.primary').textContent = mode === 'signin' ? 'Sign in' : 'Sign up';
+    swap.textContent = mode === 'signin' ? 'Create one' : 'I have an account';
+    clearAlert();
+  });
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault(); clearAlert();
+    const creds = { email: email.value.trim(), password: pass.value };
+    try{
+      if (mode === 'signin'){
+        const { error } = await sb.auth.signInWithPassword(creds);
+        if (error) throw error;
+        showAlert('success','Signed in! Redirecting…');
+        location.href = '/account.html'; // make this page next
+      } else {
+        const { error } = await sb.auth.signUp(creds);
+        if (error) throw error;
+        showAlert('success','Check your email to confirm your account.');
+      }
+    }catch(err){ showAlert('error', err.message || 'Something went wrong.'); }
+  });
+
+  reset?.addEventListener('click', async (e)=>{
+    e.preventDefault(); clearAlert();
+    try{
+      const redirectTo = location.origin + '/reset.html'; // create later
+      const { error } = await sb.auth.resetPasswordForEmail(email.value.trim(), { redirectTo });
+      if (error) throw error;
+      showAlert('success','Reset email sent. Check your inbox.');
+    }catch(err){ showAlert('error', err.message || 'Unable to send reset email.'); }
+  });
+
+  gbtn?.addEventListener('click', async ()=>{
+    try{
+      const { error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + '/account.html' }});
+      if (error) throw error;
+    }catch(err){ showAlert('error', err.message || 'Google sign-in failed.'); }
+  });
+})();
+
+// 4) Tiny helpers you can reuse on other pages
+window.requireAuth = async function redirectIfNotAuthed(){
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) location.href = '/login.html';
+}
+
+window.signOut = async function(){
+  await sb.auth.signOut();
+  location.href = '/login.html';
+}
+```
+
+---
+
+## 3) Update your nav to include Login/Account
+
+Edit `/partials/nav.html` and add a link to `Login` or `Account` (your choice). Example:
+
+```html
+<nav class="links nav-bar" id="site-links" aria-label="Primary">
+  <a class="nav-link" href="/index.html">Home</a>
+  <a class="nav-link" href="/new.html">New Tools</a>
+  <a class="nav-link" href="/reviews.html">Reviews</a>
+  <a class="nav-link" href="/lists.html">Lists</a>
+  <a class="nav-link" href="/toolkits.html">Toolkits</a>
+  <a class="btn pill" href="/login.html">Login</a>
+</nav>
+```
+
+---
+
+## 4) (Optional) Add a simple protected page
+
+Create `account.html` and protect it by calling `requireAuth()` on load:
+
+```html
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Account</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script defer src="/scripts/auth.js"></script>
+</head>
+<body onload="requireAuth()">
+  <header>
+    <div class="container nav">
+      <a href="/index.html" class="logo">⚡ Tool Finder</a>
+      <button class="menu-toggle" aria-controls="site-links" aria-expanded="false">☰</button>
+      <div id="nav-holder" aria-live="polite"></div>
+    </div>
+  </header>
+  <main class="container" style="padding:2rem 0">
+    <h1>Account</h1>
+    <p>You are logged in.</p>
+    <button class="btn primary" onclick="signOut()">Sign out</button>
+  </main>
+  <script>
+    // load nav like on login.html
+    (async()=>{const h=document.getElementById('nav-holder');const r=await fetch('/partials/nav.html',{cache:'no-cache'});h.innerHTML=await r.text();})();
+  </script>
+</body></html>
+```
+
+---
+
+## 5) Supabase setup checklist (important!)
+
+1. **Create a Supabase project** → copy your **Project URL** and **anon key** into `scripts/auth.js`.
+2. **Auth → URL configuration**: add your Vercel domain(s) to **Redirect URLs** and **Allowed Callback URLs**, e.g.:
+
+   * `https://your-site.vercel.app/account.html`
+   * `https://your-site.vercel.app/reset.html`
+   * (add your custom domain too if you have one)
+3. **Auth providers** (if using Google): enable Google in **Authentication → Providers** and add the same redirect URL.
+4. **Database security**: your anon key is public by design—keep your data safe with **Row Level Security (RLS)** and policies.
+
+---
+
+### That’s it
+
+* Commit `login.html`, `scripts/auth.js`, and update `/partials/nav.html`.
+* Deploy on Vercel; visit `/login.html` to test sign-in/sign-up, Google OAuth, and redirect to `/account.html`.
+* When you’re ready, I can add a **password reset page** and a **profile form** that updates `auth.users` metadata.
