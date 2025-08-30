@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us</title>
+  <meta name="description" content="Learn more about us." />
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#0f172a;background:#f8fafc}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1100px,92%);margin:0 auto}
+    header{position:sticky;top:0;backdrop-filter:blur(6px);background:rgba(248,250,252,.8);border-bottom:1px solid #e2e8f0;z-index:10}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+    .brand{display:flex;gap:.6rem;align-items:center;font-weight:800;letter-spacing:.3px}
+    .brand-badge{width:28px;height:28px;border-radius:.6rem;background:linear-gradient(135deg,#06b6d4,#3b82f6)}
+    .nav a{margin-left:1rem;padding:.4rem .6rem;border-radius:.5rem}
+    .nav a:hover{background:#e2e8f0}
+    main{padding:3rem 0}
+    h1{font-size:clamp(2rem,3vw + 1rem,3.2rem);line-height:1.1;margin:0 0 1rem}
+    p{color:#334155;max-width:70ch}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:white;border:1px solid #e2e8f0;border-radius:1rem;padding:1.25rem;box-shadow:0 1px 0 rgba(2,6,23,.04)}
+    footer{margin-top:3rem;padding:2rem 0 4rem;color:#64748b;border-top:1px solid #e2e8f0;text-align:center;font-size:.95rem}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>My First Site</span>
+      </div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html" aria-current="page">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>About Us</h1>
+    <p>Swap this text with your story—who you help, why you exist, and what makes you different. Keep it short and human. Add a photo if you like by placing the file in the same folder and using <code>&lt;img src="photo.jpg" alt="Our team"&gt;</code>.</p>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Our Mission</h2>
+        <p>One or two sentences about the outcome you deliver for customers.</p>
+      </section>
+      <section class="card">
+        <h2>What We Do</h2>
+        <p>List your core services or products in plain language.</p>
+      </section>
+      <section class="card">
+        <h2>Values</h2>
+        <p>3–5 values you want every visitor to feel.</p>
+      </section>
+      <section class="card">
+        <h2>Contact</h2>
+        <p>Email, phone, or a link back to the contact section on the home page.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Your Name.</div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
