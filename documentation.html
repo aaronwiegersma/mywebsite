@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Documentation • DocsApp</title>
+<link rel="stylesheet" href="/style.css" />
+<script defer src="/scripts/app.js"></script>
+</head>
+<body>
+<header id="header-holder"></header>
+
+
+<main class="container page">
+<!-- Sidebar -->
+<aside id="page-aside" class="aside" aria-label="Sections">
+<h3>Assets</h3>
+<nav class="navlist">
+<a href="#computers" aria-current="page">Computers</a>
+<a href="#users">Users</a>
+<a href="#servers">Servers</a>
+<a href="#printers">Printers</a>
+<a href="#network">Network</a>
+<a href="#software">Software</a>
+<a href="#notes">Notes</a>
+</nav>
+</aside>
+
+
+<!-- Main -->
+<section class="main">
+<div class="toolbar">
+<input class="input" placeholder="Search computers…" />
+<button class="button">+ New</button>
+<button class="button">Import CSV</button>
+<span class="button" title="Current client">Client: <strong id="client-badge"></strong></span>
+</div>
+
+
+<h1 id="computers">Computers</h1>
+<table class="table" role="grid">
+<thead><tr><th>Name</th><th>User</th><th>OS</th><th>Last Seen</th></tr></thead>
+<tbody>
+<tr><td>ABC‑LAP‑001</td><td>A. Wiegersma</td><td>macOS 14</td><td>Today</td></tr>
+<tr><td>ABC‑WK‑023</td><td>J. Smith</td><td>Windows 11</td><td>Yesterday</td></tr>
+</tbody>
+</table>
+
+
+<h1 id="users" style="margin-top:22px">Users</h1>
+<p class="muted">(Mock section — fill in tables later)</p>
+</section>
+</main>
+
+
+<script>
+// Show the selected client in the toolbar badge
+const badge = document.getElementById('client-badge');
+function paint(){ badge.textContent = getSelectedClient(); }
+window.addEventListener('client:change', paint);
+paint();
+</script>
+</body>
+</html>
