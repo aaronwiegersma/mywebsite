@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checklist • DocsApp</title>
+<link rel="stylesheet" href="/style.css" />
+<script defer src="/scripts/app.js"></script>
+</head>
+<body>
+<header id="header-holder"></header>
+
+
+<main class="container page">
+<!-- Sidebar -->
+<aside id="page-aside" class="aside" aria-label="Sections" hidden>
+<h3>Checklists</h3>
+<nav class="navlist">
+<a href="#checklist" aria-current="page">Checklist</a>
+<a href="#documentation">Documentation</a>
+<a href="#photos">Site photos</a>
+<a href="#compliance">Compliance</a>
+</nav>
+</aside>
+
+
+<!-- Main -->
+<section class="main">
+<div class="toolbar">
+<input class="input" placeholder="Search tasks…" />
+<button class="button primary">+ New Task</button>
+<span class="button">Client: <strong id="client-badge"></strong></span>
+<button class="button" id="show-aside">Show Sections</button>
+</div>
+
+
+<h1 id="checklist">Checklist</h1>
+<table class="table" role="grid">
+<thead><tr><th>Task</th><th>Assignee</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Onboard new hire</td><td>IT</td><td>In Progress</td></tr>
+<tr><td>Server patch cycle</td><td>Ops</td><td>Open</td></tr>
+</tbody>
+</table>
+
+
+<h1 id="documentation" style="margin-top:22px">Documentation</h1>
+<p class="muted">Link back to relevant docs for this client.</p>
+
+
+<h1 id="photos" style="margin-top:22px">Site photos</h1>
+<p class="muted">Drop photo thumbnails here later.</p>
+
+
+<h1 id="compliance" style="margin-top:22px">Compliance</h1>
+<p class="muted">Policy checklists, SOC2 prep, etc.</p>
+</section>
+</main>
+
+
+<script>
+const badge = document.getElementById('client-badge');
+function paint(){ badge.textContent = getSelectedClient(); }
+window.addEventListener('client:change', paint); paint();
+
+
+// Show aside on small screens
+document.getElementById('show-aside').addEventListener('click', ()=>{
+document.getElementById('page-aside').removeAttribute('hidden');
+});
+</script>
+</body>
+</html>
