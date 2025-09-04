@@ -8,12 +8,11 @@
   <script defer src="/scripts/app.js"></script>
   <style>
     /* Page-specific helpers for asset lists */
-    .panel{background:var(--panel);border:1px solid var(--ring);border-radius:var(--radius);padding:14px}
-    .panel h2{margin:.2rem 0 8px;font-size:1.1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-    .asset-list{display:grid;gap:8px}
-    .row{display:flex;align-items:center;gap:.6rem;padding:.6rem .7rem;border:1px solid var(--ring);border-radius:10px;background:#0f1117;color:var(--ink)}
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
-    .stack{display:grid;gap:16px}
+    .panel{margin-bottom:18px}
+    .panel h3{margin:6px 8px 10px;font-size:.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .asset-list{display:grid;gap:6px}
+    .asset-list a{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;border-radius:10px;color:var(--muted)}
+    .asset-list a:hover,.asset-list a[aria-current="page"]{background:#151924;color:var(--ink)}
   </style>
 </head>
 <body>
@@ -21,57 +20,48 @@
   <header id="header-holder"></header>
 
   <main class="container page">
-    <!-- Left Sidebar (same look as Documentation page) -->
+    <!-- Left Sidebar now has Core and Supporting sections -->
     <aside id="page-aside" class="aside" aria-label="Sections">
-      <h3>Assets</h3>
-      <nav class="navlist">
-        <a href="#core" aria-current="page">Core</a>
-        <a href="#supporting">Supporting</a>
-      </nav>
+      <div class="panel">
+        <h3>Core</h3>
+        <nav class="asset-list">
+          <a href="#users">Users</a>
+          <a href="#computers">Computers</a>
+          <a href="#servers">Servers</a>
+          <a href="#printers">Printers</a>
+          <a href="#photos">Photos</a>
+          <a href="#locations">Locations</a>
+          <a href="#networks">Networks</a>
+          <a href="#passwords">Passwords</a>
+        </nav>
+      </div>
+      <div class="panel">
+        <h3>Supporting</h3>
+        <nav class="asset-list">
+          <a href="#domains">Domains</a>
+          <a href="#email">Email</a>
+          <a href="#lan">LAN</a>
+          <a href="#wan">WAN</a>
+          <a href="#licenses">Licenses</a>
+          <a href="#applications">Applications</a>
+          <a href="#vendors">Vendors</a>
+          <a href="#remote-access">Remote access</a>
+          <a href="#voice">Voice</a>
+          <a href="#wireless">Wireless</a>
+          <a href="#idrac">iDrac</a>
+          <a href="#bcdr">BCDR</a>
+        </nav>
+      </div>
     </aside>
 
-    <!-- Right content: Core & Supporting assets -->
+    <!-- Right content -->
     <section class="main">
       <div class="toolbar">
         <input class="input" placeholder="Search assets…" />
         <span class="button">Client: <strong id="client-badge"></strong></span>
       </div>
-
-      <div class="stack">
-        <!-- Core (title only) -->
-        <div class="panel">
-          <h2>Core</h2>
-          <div class="asset-list" aria-label="Core assets">
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Users</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Computers</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Servers</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Printers</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Photos</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Locations</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Networks</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Passwords</span></div>
-          </div>
-        </div>
-
-        <!-- Supporting (title only) -->
-        <div class="panel">
-          <h2>Supporting</h2>
-          <div class="asset-list" aria-label="Supporting assets">
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Domains</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Email</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>LAN</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>WAN</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Licenses</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Applications</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Vendors</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Remote access</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Voice</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>Wireless</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>iDrac</span></div>
-            <div class="row"><span class="dot" aria-hidden="true"></span><span>BCDR</span></div>
-          </div>
-        </div>
-      </div>
+      <h1>Assets</h1>
+      <p class="muted">Select an item from the left sidebar to view details.</p>
     </section>
   </main>
 
