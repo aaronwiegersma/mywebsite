@@ -1,64 +1,107 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Documentation • DocsApp</title>
-<link rel="stylesheet" href="/style.css" />
-<script defer src="/scripts/app.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentation • Assets • DocsApp</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script defer src="/scripts/app.js"></script>
+  <style>
+    /* Page-specific helpers for asset tiles */
+    .asset-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width: 980px){ .asset-sections{grid-template-columns:1fr} }
+    .panel{background:var(--panel);border:1px solid var(--ring);border-radius:var(--radius);padding:14px}
+    .panel h2{margin:.2rem 0 8px;font-size:1.1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+    .asset{display:flex;align-items:center;gap:.55rem;padding:.7rem .8rem;border:1px solid var(--ring);border-radius:10px;background:#0f1117;color:var(--ink);text-decoration:none}
+    .asset:hover{background:#151924}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
+  </style>
 </head>
 <body>
-<header id="header-holder"></header>
+  <!-- Shared header gets injected here by /scripts/app.js -->
+  <header id="header-holder"></header>
 
+  <main class="container page">
+    <!-- Left Sidebar (same look as Documentation page) -->
+    <aside id="page-aside" class="aside" aria-label="Sections">
+      <h3>Assets</h3>
+      <nav class="navlist">
+        <a href="#core" aria-current="page">Core</a>
+        <a href="#supporting">Supporting</a>
+      </nav>
+    </aside>
 
-<main class="container page">
-<!-- Sidebar -->
-<aside id="page-aside" class="aside" aria-label="Sections">
-<h3>Assets</h3>
-<nav class="navlist">
-<a href="#computers" aria-current="page">Computers</a>
-<a href="#users">Users</a>
-<a href="#servers">Servers</a>
-<a href="#printers">Printers</a>
-<a href="#network">Network</a>
-<a href="#software">Software</a>
-<a href="#notes">Notes</a>
-</nav>
-</aside>
+    <!-- Right content: Core & Supporting assets -->
+    <section class="main">
+      <div class="toolbar">
+        <input class="input" placeholder="Search assets…" />
+        <span class="button">Client: <strong id="client-badge"></strong></span>
+      </div>
 
+      <div class="asset-sections">
+        <!-- Core -->
+        <div id="core" class="panel">
+          <h2>Core</h2>
+          <div class="asset-grid">
+            <a class="asset" href="#users"><span class="dot" aria-hidden="true"></span> Users</a>
+            <a class="asset" href="#computers"><span class="dot" aria-hidden="true"></span> Computers</a>
+            <a class="asset" href="#servers"><span class="dot" aria-hidden="true"></span> Servers</a>
+            <a class="asset" href="#printers"><span class="dot" aria-hidden="true"></span> Printers</a>
+            <a class="asset" href="#photos"><span class="dot" aria-hidden="true"></span> Photos</a>
+            <a class="asset" href="#locations"><span class="dot" aria-hidden="true"></span> Locations</a>
+            <a class="asset" href="#networks"><span class="dot" aria-hidden="true"></span> Networks</a>
+            <a class="asset" href="#passwords"><span class="dot" aria-hidden="true"></span> Passwords</a>
+          </div>
+        </div>
 
-<!-- Main -->
-<section class="main">
-<div class="toolbar">
-<input class="input" placeholder="Search computers…" />
-<button class="button">+ New</button>
-<button class="button">Import CSV</button>
-<span class="button" title="Current client">Client: <strong id="client-badge"></strong></span>
-</div>
+        <!-- Supporting -->
+        <div id="supporting" class="panel">
+          <h2>Supporting</h2>
+          <div class="asset-grid">
+            <a class="asset" href="#domains"><span class="dot" aria-hidden="true"></span> Domains</a>
+            <a class="asset" href="#email"><span class="dot" aria-hidden="true"></span> Email</a>
+            <a class="asset" href="#lan"><span class="dot" aria-hidden="true"></span> LAN</a>
+            <a class="asset" href="#wan"><span class="dot" aria-hidden="true"></span> WAN</a>
+            <a class="asset" href="#licenses"><span class="dot" aria-hidden="true"></span> Licenses</a>
+            <a class="asset" href="#applications"><span class="dot" aria-hidden="true"></span> Applications</a>
+            <a class="asset" href="#vendors"><span class="dot" aria-hidden="true"></span> Vendors</a>
+            <a class="asset" href="#remote-access"><span class="dot" aria-hidden="true"></span> Remote access</a>
+            <a class="asset" href="#voice"><span class="dot" aria-hidden="true"></span> Voice</a>
+            <a class="asset" href="#wireless"><span class="dot" aria-hidden="true"></span> Wireless</a>
+            <a class="asset" href="#idrac"><span class="dot" aria-hidden="true"></span> iDrac</a>
+            <a class="asset" href="#bcdr"><span class="dot" aria-hidden="true"></span> BCDR</a>
+          </div>
+        </div>
 
+         <!-- Documentation -->
+        <div id="supporting" class="panel">
+          <h2>Supporting</h2>
+          <div class="asset-grid">
+            <a class="asset" href="#photos"><span class="dot" aria-hidden="true"></span> Photos</a>
+            <a class="asset" href="#Documents"><span class="dot" aria-hidden="true"></span> Documents</a>
+          </div>
+        </div>
+      </div>
 
-<h1 id="computers">Computers</h1>
-<table class="table" role="grid">
-<thead><tr><th>Name</th><th>User</th><th>OS</th><th>Last Seen</th></tr></thead>
-<tbody>
-<tr><td>ABC‑LAP‑001</td><td>A. Wiegersma</td><td>macOS 14</td><td>Today</td></tr>
-<tr><td>ABC‑WK‑023</td><td>J. Smith</td><td>Windows 11</td><td>Yesterday</td></tr>
-</tbody>
-</table>
+      <!-- (Optional) Anchor targets / placeholders for each asset type -->
+      <div style="margin-top:18px">
+        <h1 id="users">Users</h1>
+        <p class="muted">Add a table or details for Users here.</p>
+        <h1 id="computers" style="margin-top:18px">Computers</h1>
+        <p class="muted">Add a table or details for Computers here.</p>
+        <h1 id="servers" style="margin-top:18px">Servers</h1>
+        <p class="muted">Add a table or details for Servers here.</p>
+        <!-- ... add similar placeholders as you flesh out each asset ... -->
+      </div>
+    </section>
+  </main>
 
-
-<h1 id="users" style="margin-top:22px">Users</h1>
-<p class="muted">(Mock section — fill in tables later)</p>
-</section>
-</main>
-
-
-<script>
-// Show the selected client in the toolbar badge
-const badge = document.getElementById('client-badge');
-function paint(){ badge.textContent = getSelectedClient(); }
-window.addEventListener('client:change', paint);
-paint();
-</script>
+  <script>
+    // Keep the client badge in sync with the header's client picker
+    const badge = document.getElementById('client-badge');
+    function paint(){ badge.textContent = getSelectedClient(); }
+    window.addEventListener('client:change', paint); paint();
+  </script>
 </body>
 </html>
