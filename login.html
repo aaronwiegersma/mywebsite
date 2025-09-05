@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Log in • DocsApp</title>
+<link rel="stylesheet" href="/style.css" />
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script defer src="/scripts/auth.js"></script>
+</head>
+<body>
+<!-- shared header injected by /scripts/app.js (optional) -->
+<header id="header-holder"></header>
+
+
+<main class="container" style="max-width:520px;padding:2rem 0">
+<h1 style="margin:0 0 .5rem">Welcome</h1>
+<p class="muted" style="margin:0 0 1rem">Sign in or create an account to continue.</p>
+
+
+<div id="auth-alert" class="alert" style="display:none"></div>
+
+
+<form id="auth-form" class="auth-form" style="display:grid;gap:.75rem">
+<div class="row" style="display:grid;gap:.35rem">
+<label for="email">Email</label>
+<input id="email" name="email" type="email" required class="input" />
+</div>
+<div class="row" style="display:grid;gap:.35rem">
+<label for="password">Password</label>
+<input id="password" name="password" type="password" required class="input" />
+</div>
+<button class="button primary" type="submit" id="submit-btn">Sign in</button>
+<button class="button" type="button" id="swap-btn">Create an account</button>
+<a href="#" id="reset-link" style="color:var(--muted);font-size:.95rem">Forgot password?</a>
+</form>
+</main>
+
+
+<script>
+// If you already use /scripts/app.js for the header, uncomment the next line:
+// (async()=>{const h=document.getElementById('header-holder');if(h){const r=await fetch('/partials/header.html',{cache:'no-cache'});h.innerHTML=await r.text();}})();
+</script>
+</body>
+</html>
