@@ -1,11 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
+
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Checklist • DocsApp</title>
   <link rel="stylesheet" href="/style.css" />
+
+  <!-- 1) Supabase client -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <!-- 2) Your auth helpers: defines requireAuth() -->
+  <script defer src="/scripts/auth.js"></script>
+
+  <!-- (optional) Your site script that injects header, etc. -->
   <script defer src="/scripts/app.js"></script>
+  
 </head>
 <body onload="requireAuth()">
   <!-- Shared header gets injected here by /scripts/app.js -->
