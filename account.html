@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Account • DocsApp</title>
+<link rel="stylesheet" href="/style.css" />
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script defer src="/scripts/auth.js"></script>
+</head>
+<body onload="requireAuth()">
+<header id="header-holder"></header>
+<main class="container" style="padding:2rem 0">
+<h1>My Account</h1>
+<p>You are signed in.</p>
+<button class="button" onclick="signOut()">Sign out</button>
+</main>
+<script>
+// (optional) inject your shared header
+// (async()=>{const h=document.getElementById('header-holder');if(h){const r=await fetch('/partials/header.html',{cache:'no-cache'});h.innerHTML=await r.text();}})();
+</script>
+</body>
+</html>
