@@ -107,7 +107,7 @@ window.signOut = async function() {
     e.preventDefault();
     clearMsg();
     try {
-      const redirectTo = location.origin + "/login.html";
+      const redirectTo = location.origin + '/reset.html';
       const { error } = await sb.auth.resetPasswordForEmail(email.value.trim(), { redirectTo });
       if (error) throw error;
       show("success", "Password reset email sent.");
