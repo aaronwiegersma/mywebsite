@@ -1,26 +1,73 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>My Account</title>
-<link rel="stylesheet" href="/style.css" />
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script defer src="/scripts/auth.js"></script>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Account • DocsApp</title>
+  <link rel="stylesheet" href="/style.css" />
+  <!-- Load Supabase client + your auth helpers -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script defer src="/scripts/auth.js"></script>
+  <script defer src="/scripts/app.js"></script>
 </head>
 <body onload="requireAuth()">
-<header>
-<div class="container nav">
-<a href="/index.html" class="logo">⚡ Tool Finder</a>
-<button class="menu-toggle" aria-controls="site-links" aria-expanded="false">☰</button>
-<div id="nav-holder" aria-live="polite"></div>
-</div>
-</header>
-<main class="container" style="padding:2rem 0">
-<h1>Account</h1>
-<p>You are logged in.</p>
-<button class="btn primary" onclick="signOut()">Sign out</button>
-</main>
-<script>
-// load nav like on login.html
-(async()=>{const h=document.getElementById('nav-holder');const r=await fetch('/partials/nav.html',{cache:'no-cache'});h.innerHTML=await r.text();})();
-</script>
-</body></html>
+  <!-- Shared header -->
+  <header id="header-holder"></header>
+
+  <main class="container" style="padding:2rem 0;max-width:700px">
+    <h1>My Account</h1>
+    <p>You are signed in. Manage your organization and teammates below.</p>
+
+    <!-- Invite section -->
+    <section style="margin-top:2rem">
+      <h2>Invite a teammate</h2>
+      <form id="invite-form" style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:1rem 0">
+        <input id="invite-email" type="email" placeholder="teammate@example.com" required
+               class="input" style="flex:1;min-width:220px">
+        <select id="invite-role" class="input">
+          <option value="member" selected>Member</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button type="submit" class="button primary">Send Invite</button>
+      </form>
+      <div id="invite-msg" class="muted"></div>
+    </section>
+
+    <button class="button" style="margin-top:2rem" onclick="signOut()">Sign out</button>
+  </main>
+
+  <script>
+    const form = document.getElementById('invite-form');
+    const emailInput = document.getElementById('invite-email');
+    const roleSelect = document.getElementById('invite-role');
+    const msg = document.getElementById('invite-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const inviteEmail = emailInput.value.trim();
+      const role = roleSelect.value;
+
+      // Get the current org_id (however you store it; adjust if needed)
+      const currentOrgId = localStorage.getItem('docsapp:org_id');
+      if (!currentOrgId) {
+        msg.textContent = '⚠️ No organization selected.';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/invite', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ org_id: currentOrgId, email: inviteEmail, role })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Invite failed');
+        msg.textContent = `✅ Invite sent to ${inviteEmail}`;
+        emailInput.value = '';
+      } catch (err) {
+        msg.textContent = '❌ Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
